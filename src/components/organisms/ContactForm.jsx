@@ -108,11 +108,11 @@ savedContact = await contactService.update(contact.Id, formData);
     }
   };
 
-  const handleAddTag = () => {
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim().toLowerCase())) {
+const handleAddTag = () => {
+    if (tagInput.trim() && !formData.tags?.includes(tagInput.trim().toLowerCase())) {
       setFormData(prev => ({
         ...prev,
-        tags: [...prev.tags, tagInput.trim().toLowerCase()]
+        tags: [...(prev.tags || []), tagInput.trim().toLowerCase()]
       }));
       setTagInput("");
     }
@@ -147,10 +147,10 @@ value={formData.first_name_c}
           
           <FormField
 label="Last Name"
-            required
+required
             error={errors.last_name_c}
             value={formData.last_name_c}
-            onChange={(e) => handleInputChange("lastName", e.target.value)}
+            onChange={(e) => handleInputChange("last_name_c", e.target.value)}
             placeholder="Enter last name"
           />
         </div>
@@ -159,9 +159,9 @@ label="Last Name"
           label="Email Address"
           required
           type="email"
-          error={errors.email}
-          value={formData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
+error={errors.email_c}
+          value={formData.email_c}
+          onChange={(e) => handleInputChange("email_c", e.target.value)}
           placeholder="Enter email address"
         />
         
@@ -169,9 +169,9 @@ label="Last Name"
           label="Phone Number"
           required
           type="tel"
-          error={errors.phone}
-          value={formData.phone}
-          onChange={(e) => handleInputChange("phone", e.target.value)}
+error={errors.phone_c}
+          value={formData.phone_c}
+          onChange={(e) => handleInputChange("phone_c", e.target.value)}
           placeholder="Enter phone number"
         />
         
@@ -179,24 +179,24 @@ label="Last Name"
           <FormField
             label="Company Name"
             required
-            error={errors.company}
-            value={formData.company}
-            onChange={(e) => handleInputChange("company", e.target.value)}
+error={errors.company_c}
+            value={formData.company_c}
+            onChange={(e) => handleInputChange("company_c", e.target.value)}
             placeholder="Enter company name"
           />
           
           <FormField
             label="Job Title / Position"
-            value={formData.position}
-            onChange={(e) => handleInputChange("position", e.target.value)}
+value={formData.position_c}
+            onChange={(e) => handleInputChange("position_c", e.target.value)}
             placeholder="Enter job title"
           />
         </div>
         
         <FormField
           label="Profile Photo URL"
-          value={formData.photo}
-          onChange={(e) => handleInputChange("photo", e.target.value)}
+value={formData.photo_c}
+          onChange={(e) => handleInputChange("photo_c", e.target.value)}
           placeholder="Enter photo URL (optional)"
         />
         
@@ -221,9 +221,9 @@ label="Last Name"
               </Button>
             </div>
             
-            {formData.tags.length > 0 && (
+{formData.tags?.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {formData.tags.map((tag) => (
+                {formData.tags?.map((tag) => (
                   <div
                     key={tag}
                     className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-primary-100 to-primary-200 text-primary-800 text-sm font-medium rounded-full border border-primary-300"
@@ -244,9 +244,9 @@ label="Last Name"
         </FormField>
         
         <FormField label="Additional Notes">
-          <textarea
-            value={formData.notes}
-            onChange={(e) => handleInputChange("notes", e.target.value)}
+<textarea
+            value={formData.notes_c}
+            onChange={(e) => handleInputChange("notes_c", e.target.value)}
             placeholder="Add any additional notes or comments about this contact..."
             rows="4"
             className="flex w-full rounded-lg border border-green-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1 focus:border-primary-500 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 resize-vertical"
