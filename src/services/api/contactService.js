@@ -166,7 +166,7 @@ export const contactService = {
     }
   },
 
-  async toggleFavorite(id) {
+async toggleFavorite(id) {
     try {
       const contact = await this.getById(id);
       if (!contact) {
@@ -183,6 +183,46 @@ export const contactService = {
       };
 
       const response = await apperClient.updateRecord(TABLE_NAME, params);
+      
+      // If successfully marked as favorite, send email notification
+      if (response.success && !contact.is_favorite_c) {
+        try {
+          // Initialize ApperClient for Edge Function invocation
+          const { ApperClient } = window.ApperSDK;
+          const apperClientInstance = new ApperClient({
+            apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+            apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+          });
+          
+          // Prepare contact details for email
+          const emailData = {
+            contactName: `${contact.first_name_c || ''} ${contact.last_name_c || ''}`.trim(),
+            contactEmail: contact.email_c || '',
+            contactPhone: contact.phone_c || '',
+            contactCompany: contact.company_c || '',
+            contactTags: contact.tags_c || ''
+          };
+          
+          // Invoke Edge Function to send email
+          const emailResult = await apperClientInstance.functions.invoke(
+            import.meta.env.VITE_SEND_CONTACT_FAVORITE_EMAIL,
+            {
+              body: JSON.stringify(emailData),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+          );
+          
+          // Check if email sending failed
+          if (!emailResult.success) {
+            console.info(`apper_info: An error was received in this function: ${import.meta.env.VITE_SEND_CONTACT_FAVORITE_EMAIL}. The response body is: ${JSON.stringify(emailResult)}.`);
+          }
+        } catch (emailError) {
+          // Log email error but don't fail the favorite toggle
+          console.info(`apper_info: An error was received in this function: ${import.meta.env.VITE_SEND_CONTACT_FAVORITE_EMAIL}. The error is: ${emailError.message}`);
+        }
+      }
 
       if (!response.success) {
         console.error(response.message);
