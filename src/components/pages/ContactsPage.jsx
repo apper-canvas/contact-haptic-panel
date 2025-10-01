@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { contactService } from "@/services/api/contactService";
+import { AuthContext } from "@/App";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import DeleteContactModal from "@/components/organisms/DeleteContactModal";
 import ContactList from "@/components/organisms/ContactList";
 import ContactDetail from "@/components/organisms/ContactDetail";
 import ContactModal from "@/components/organisms/ContactModal";
-import DeleteContactModal from "@/components/organisms/DeleteContactModal";
-import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
-import { contactService } from "@/services/api/contactService";
 
 const ContactsPage = () => {
+  const { logout } = useContext(AuthContext);
   const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -37,18 +39,18 @@ const handleSaveContact = () => {
     setRefreshTrigger(prev => prev + 1);
   };
 
-  const handleToggleFavorite = async (contact) => {
+const handleToggleFavorite = async (contact) => {
     try {
       await contactService.toggleFavorite(contact.Id);
       toast.success(
-        contact.isFavorite 
-          ? `${contact.firstName} ${contact.lastName} removed from favorites` 
-          : `${contact.firstName} ${contact.lastName} added to favorites`
+        contact.is_favorite_c
+          ? `${contact.first_name_c} ${contact.last_name_c} removed from favorites`
+          : `${contact.first_name_c} ${contact.last_name_c} added to favorites`
       );
-      setRefreshTrigger(prev => prev + 1);
+      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.info(`apper_info: Error toggling favorite status for contact ${contact.Id}. The error is: ${error.message}`);
-      toast.error('Failed to update favorite status');
+      toast.error("Failed to update favorite status");
     }
   };
 
@@ -57,7 +59,17 @@ const handleSaveContact = () => {
       setSelectedContact(null);
       setShowMobileDetail(false);
     }
-    setRefreshTrigger(prev => prev + 1);
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Logged out successfully");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to logout");
+    }
   };
 
   const handleCloseModal = () => {

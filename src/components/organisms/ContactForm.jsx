@@ -7,16 +7,16 @@ import Input from "@/components/atoms/Input";
 import ApperIcon from "@/components/ApperIcon";
 
 const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    company: "",
-    position: "",
-    photo: "",
-    tags: [],
-    notes: ""
+const [formData, setFormData] = useState({
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    company_c: "",
+    position_c: "",
+    photo_c: "",
+    tags_c: [],
+    notes_c: "",
   });
   
   const [tagInput, setTagInput] = useState("");
@@ -24,17 +24,17 @@ const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (contact) {
+if (contact) {
       setFormData({
-        firstName: contact.firstName || "",
-        lastName: contact.lastName || "",
-        email: contact.email || "",
-        phone: contact.phone || "",
-        company: contact.company || "",
-        position: contact.position || "",
-        photo: contact.photo || "",
-        tags: contact.tags || [],
-        notes: contact.notes || ""
+        first_name_c: contact.first_name_c || "",
+        last_name_c: contact.last_name_c || "",
+        email_c: contact.email_c || "",
+        phone_c: contact.phone_c || "",
+        company_c: contact.company_c || "",
+        position_c: contact.position_c || "",
+        photo_c: contact.photo_c || "",
+        tags_c: contact.tags_c ? (typeof contact.tags_c === "string" ? contact.tags_c.split(",") : contact.tags_c) : [],
+        notes_c: contact.notes_c || "",
       });
     }
   }, [contact]);
@@ -42,26 +42,26 @@ const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
+if (!formData.first_name_c.trim()) {
+      newErrors.first_name_c = "First name is required";
     }
-    
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
+
+    if (!formData.last_name_c.trim()) {
+      newErrors.last_name_c = "Last name is required";
     }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+
+    if (!formData.email_c.trim()) {
+      newErrors.email_c = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Please enter a valid email";
     }
-    
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
+
+    if (!formData.phone_c.trim()) {
+      newErrors.phone_c = "Phone number is required";
     }
-    
-    if (!formData.company.trim()) {
-      newErrors.company = "Company is required";
+
+    if (!formData.company_c.trim()) {
+      newErrors.company_c = "Company is required";
     }
     
     setErrors(newErrors);
@@ -81,10 +81,14 @@ const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
     try {
       let savedContact;
       if (isEdit && contact) {
-        savedContact = await contactService.update(contact.Id, formData);
+savedContact = await contactService.update(contact.Id, formData);
         toast.success("Contact updated successfully!");
       } else {
-        savedContact = await contactService.create(formData);
+        const processedData = {
+          ...formData,
+          tags_c: Array.isArray(formData.tags_c) ? formData.tags_c : [],
+        };
+        savedContact = await contactService.create(processedData);
         toast.success("Contact created successfully!");
       }
       
@@ -136,16 +140,16 @@ const ContactForm = ({ contact, onSave, onCancel, isEdit = false }) => {
             label="First Name"
             required
             error={errors.firstName}
-            value={formData.firstName}
-            onChange={(e) => handleInputChange("firstName", e.target.value)}
+value={formData.first_name_c}
+            onChange={(e) => handleInputChange("first_name_c", e.target.value)}
             placeholder="Enter first name"
           />
           
           <FormField
-            label="Last Name"
+label="Last Name"
             required
-            error={errors.lastName}
-            value={formData.lastName}
+            error={errors.last_name_c}
+            value={formData.last_name_c}
             onChange={(e) => handleInputChange("lastName", e.target.value)}
             placeholder="Enter last name"
           />

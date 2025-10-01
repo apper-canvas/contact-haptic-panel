@@ -41,15 +41,15 @@ className={cn(
       <div className="flex items-start gap-4">
         <Avatar
           src={contact.photo}
-          alt={`${contact.firstName} ${contact.lastName}`}
+alt={`${contact.first_name_c} ${contact.last_name_c}`}
           size="lg"
-          className="shrink-0"
+          className="border-2 border-green-200 shadow-sm"
         />
-        
+
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-start justify-between gap-2 mb-2">
             <h3 className="text-lg font-bold text-slate-900 truncate">
-              {contact.firstName} {contact.lastName}
+              {contact.first_name_c} {contact.last_name_c}
             </h3>
 <div className="flex items-center gap-1 opacity-100 transition-opacity duration-200 shrink-0 ml-2">
               <Button
@@ -62,17 +62,14 @@ className={cn(
                 className={cn(
                   "p-2 h-auto border border-green-200 transition-colors duration-200",
                   contact.isFavorite 
-                    ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-100" 
+? "bg-yellow-50 text-yellow-600 hover:bg-yellow-100"
                     : "hover:bg-yellow-50 hover:text-yellow-600"
                 )}
-                title={contact.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                title={contact.is_favorite_c ? "Remove from Favorites" : "Add to Favorites"}
               >
-                <ApperIcon 
-                  name={contact.isFavorite ? "Star" : "Star"} 
-                  className={cn(
-                    "w-4 h-4",
-                    contact.isFavorite && "fill-yellow-600"
-                  )} 
+                <ApperIcon
+                  name={contact.is_favorite_c ? "Star" : "Star"}
+                  className={cn("w-4 h-4", contact.is_favorite_c && "fill-yellow-600")}
                 />
               </Button>
               <Button
@@ -103,12 +100,8 @@ className={cn(
           </div>
           
           <div className="space-y-1 mb-3">
-            <p className="text-sm font-medium text-slate-700 truncate">
-              {contact.position}
-            </p>
-<p className="text-sm font-semibold text-primary-600 truncate">
-              {contact.company}
-            </p>
+<p className="text-sm font-medium text-slate-700 truncate">{contact.position_c}</p>
+            <p className="text-sm font-semibold text-primary-600 truncate">{contact.company_c}</p>
           </div>
           
           <div className="space-y-1 mb-4">

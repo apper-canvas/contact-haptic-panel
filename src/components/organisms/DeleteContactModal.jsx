@@ -15,8 +15,8 @@ const DeleteContactModal = ({ isOpen, onClose, contact, onDelete }) => {
     setLoading(true);
     
     try {
-      await contactService.delete(contact.Id);
-      toast.success(`${contact.firstName} ${contact.lastName} deleted successfully`);
+await contactService.delete(contact.Id);
+      toast.success(`${contact.first_name_c} ${contact.last_name_c} deleted successfully`);
       onDelete(contact);
       onClose();
     } catch (error) {
@@ -67,18 +67,18 @@ const DeleteContactModal = ({ isOpen, onClose, contact, onDelete }) => {
               <div className="p-4 bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg border border-slate-200 mb-6">
                 <div className="flex items-center gap-4">
                   <Avatar
-                    src={contact.photo}
-                    alt={`${contact.firstName} ${contact.lastName}`}
-                    size="default"
-                    className="shrink-0"
+src={contact.photo_c}
+                    alt={`${contact.first_name_c} ${contact.last_name_c}`}
+                    size="xl"
                   />
-                  
-                  <div className="text-left flex-1">
-                    <h3 className="font-bold text-slate-900">
-                      {contact.firstName} {contact.lastName}
-                    </h3>
-                    <p className="text-sm text-slate-600">{contact.position}</p>
-                    <p className="text-sm font-medium text-primary-600">{contact.company}</p>
+
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Delete Contact</h3>
+                    <p className="text-lg font-medium text-slate-700 mb-2">
+                      {contact.first_name_c} {contact.last_name_c}
+                    </p>
+                    <p className="text-sm text-slate-600">{contact.position_c}</p>
+                    <p className="text-sm font-medium text-primary-600">{contact.company_c}</p>
                   </div>
                 </div>
               </div>

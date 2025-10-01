@@ -29,8 +29,12 @@ const ContactList = ({
     setError("");
     
     try {
-      const data = await contactService.getAll();
-      setContacts(data);
+const data = await contactService.getAll();
+      const processedContacts = data.map((contact) => ({
+        ...contact,
+        tags_c: contact.tags_c ? (typeof contact.tags_c === "string" ? contact.tags_c.split(",") : contact.tags_c) : [],
+      }));
+      setContacts(processedContacts);
     } catch (err) {
       console.error("Error loading contacts:", err);
       setError("Failed to load contacts. Please try again.");
@@ -45,8 +49,8 @@ const ContactList = ({
 
   const handleDeleteContact = async (contact) => {
     try {
-      await contactService.delete(contact.Id);
-      toast.success(`${contact.firstName} ${contact.lastName} deleted successfully`);
+await contactService.delete(contact.Id);
+      toast.success(`${contact.first_name_c} ${contact.last_name_c} deleted successfully`);
       await loadContacts();
       onDeleteContact(contact);
     } catch (error) {
@@ -61,11 +65,11 @@ const ContactList = ({
   };
 const handleToggleFavorite = async (contact) => {
     try {
-      await contactService.toggleFavorite(contact.Id);
+await contactService.toggleFavorite(contact.Id);
       toast.success(
-        contact.isFavorite 
-          ? `${contact.firstName} ${contact.lastName} removed from favorites` 
-          : `${contact.firstName} ${contact.lastName} added to favorites`
+        contact.is_favorite_c
+          ? `${contact.first_name_c} ${contact.last_name_c} removed from favorites`
+          : `${contact.first_name_c} ${contact.last_name_c} added to favorites`
       );
       await loadContacts();
       onRefresh?.();
@@ -80,13 +84,14 @@ let filtered = [...contacts];
     // Search filter
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
-      filtered = filtered.filter(contact =>
-        `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(search) ||
-        contact.email.toLowerCase().includes(search) ||
-        contact.phone.toLowerCase().includes(search) ||
-        contact.company.toLowerCase().includes(search) ||
-        (contact.position && contact.position.toLowerCase().includes(search)) ||
-        (contact.tags && contact.tags.some(tag => tag.toLowerCase().includes(search)))
+filtered = filtered.filter(
+        (contact) =>
+          `${contact.first_name_c} ${contact.last_name_c}`.toLowerCase().includes(search) ||
+          contact.email_c?.toLowerCase().includes(search) ||
+          contact.phone_c?.toLowerCase().includes(search) ||
+          contact.company_c?.toLowerCase().includes(search) ||
+          (contact.position_c && contact.position_c.toLowerCase().includes(search)) ||
+          (contact.tags_c && contact.tags_c.some((tag) => tag.toLowerCase().includes(search)))
       );
     }
     
