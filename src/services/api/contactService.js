@@ -31,7 +31,25 @@ export const contactService = {
     return { ...newContact };
   },
 
-  async update(id, contactData) {
+async update(id, contactData) {
+    try {
+      await delay(400);
+      const index = contacts.findIndex(c => c.Id === id);
+      if (index === -1) return null;
+      const updatedContact = {
+        ...contacts[index],
+        ...contactData,
+        updatedAt: new Date().toISOString()
+      };
+      contacts[index] = updatedContact;
+      return { ...updatedContact };
+    } catch (error) {
+      console.error('Error updating contact:', error);
+      throw error;
+    }
+  },
+
+  async toggleFavorite(id) {
     await delay(350);
     const index = contacts.findIndex(c => c.Id === parseInt(id));
     if (index === -1) {

@@ -11,6 +11,7 @@ const ContactCard = ({
   onSelect, 
   onEdit, 
   onDelete,
+  onToggleFavorite,
   className 
 }) => {
   const tagColors = {
@@ -51,6 +52,29 @@ className={cn(
               {contact.firstName} {contact.lastName}
             </h3>
 <div className="flex items-center gap-1 opacity-100 transition-opacity duration-200 shrink-0 ml-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite?.(contact);
+                }}
+                className={cn(
+                  "p-2 h-auto border border-green-200 transition-colors duration-200",
+                  contact.isFavorite 
+                    ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-100" 
+                    : "hover:bg-yellow-50 hover:text-yellow-600"
+                )}
+                title={contact.isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+              >
+                <ApperIcon 
+                  name={contact.isFavorite ? "Star" : "Star"} 
+                  className={cn(
+                    "w-4 h-4",
+                    contact.isFavorite && "fill-yellow-600"
+                  )} 
+                />
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import ContactList from "@/components/organisms/ContactList";
 import ContactDetail from "@/components/organisms/ContactDetail";
 import ContactModal from "@/components/organisms/ContactModal";
 import DeleteContactModal from "@/components/organisms/DeleteContactModal";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
+import { contactService } from "@/services/api/contactService";
 
 const ContactsPage = () => {
   const [selectedContact, setSelectedContact] = useState(null);
@@ -31,8 +33,23 @@ const ContactsPage = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveContact = () => {
+const handleSaveContact = () => {
     setRefreshTrigger(prev => prev + 1);
+  };
+
+  const handleToggleFavorite = async (contact) => {
+    try {
+      await contactService.toggleFavorite(contact.Id);
+      toast.success(
+        contact.isFavorite 
+          ? `${contact.firstName} ${contact.lastName} removed from favorites` 
+          : `${contact.firstName} ${contact.lastName} added to favorites`
+      );
+      setRefreshTrigger(prev => prev + 1);
+    } catch (error) {
+      console.info(`apper_info: Error toggling favorite status for contact ${contact.Id}. The error is: ${error.message}`);
+      toast.error('Failed to update favorite status');
+    }
   };
 
   const handleContactDeleted = (deletedContact) => {
@@ -98,11 +115,12 @@ return (
 
         {/* Right Content Area - Contact Cards */}
         <div className="flex-1 bg-white">
-          <ContactList
+<ContactList
             selectedContact={selectedContact}
             onSelectContact={handleSelectContact}
             onEditContact={handleEditContact}
             onDeleteContact={handleDeleteContact}
+            onToggleFavorite={handleToggleFavorite}
             onRefresh={() => setRefreshTrigger(prev => prev + 1)}
             refreshTrigger={refreshTrigger}
           />

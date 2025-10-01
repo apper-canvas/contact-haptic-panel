@@ -15,6 +15,7 @@ const ContactList = ({
   onSelectContact, 
   onEditContact, 
   onDeleteContact,
+  onToggleFavorite,
   onRefresh,
   refreshTrigger 
 }) => {
@@ -58,7 +59,21 @@ const ContactList = ({
     loadContacts();
     onRefresh?.();
   };
-
+const handleToggleFavorite = async (contact) => {
+    try {
+      await contactService.toggleFavorite(contact.Id);
+      toast.success(
+        contact.isFavorite 
+          ? `${contact.firstName} ${contact.lastName} removed from favorites` 
+          : `${contact.firstName} ${contact.lastName} added to favorites`
+      );
+      await loadContacts();
+      onRefresh?.();
+    } catch (error) {
+      console.info(`apper_info: Error toggling favorite status for contact ${contact.Id}. The error is: ${error.message}`);
+      toast.error('Failed to update favorite status');
+    }
+  };
   const { filteredContacts, companies, tags } = useMemo(() => {
 let filtered = [...contacts];
     
@@ -166,13 +181,14 @@ actionText="Clear Search"
 <div className="p-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredContacts.map((contact) => (
-                <ContactCard
+<ContactCard
                   key={contact.Id}
                   contact={contact}
                   isSelected={selectedContact?.Id === contact.Id}
                   onSelect={onSelectContact}
                   onEdit={onEditContact}
                   onDelete={() => handleDeleteContact(contact)}
+                  onToggleFavorite={handleToggleFavorite}
                 />
               ))}
             </div>
