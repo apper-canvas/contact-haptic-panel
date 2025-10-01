@@ -89,26 +89,28 @@ let filtered = [...contacts];
 <div className="p-6 border-b border-green-200 bg-gradient-to-r from-green-50 to-white">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-slate-900">Contact Cards</h2>
-          <Button
-            onClick={handleRefresh}
-            variant="ghost"
-            size="sm"
-            icon="RefreshCw"
-            className="text-slate-600 hover:text-slate-800"
-          >
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => onEditContact(null)}
+              icon="Plus"
+              size="sm"
+              className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-lg hover:shadow-xl"
+            >
+              Add Contact
+            </Button>
+            <Button
+              onClick={handleRefresh}
+              variant="ghost"
+              size="sm"
+              icon="RefreshCw"
+              className="text-slate-600 hover:text-slate-800"
+            >
+              Refresh
+            </Button>
+          </div>
         </div>
         
         <div className="space-y-4">
-<Button
-            onClick={() => onEditContact(null)}
-            icon="Plus"
-            size="sm"
-            className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-lg hover:shadow-xl justify-start"
-          >
-            Contact
-          </Button>
           
           <SearchBar
             value={searchTerm}
