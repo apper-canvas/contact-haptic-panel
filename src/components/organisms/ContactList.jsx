@@ -17,7 +17,8 @@ const ContactList = ({
   onDeleteContact,
   onToggleFavorite,
   onRefresh,
-  refreshTrigger 
+  refreshTrigger,
+  filterView = 'all'
 }) => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -74,8 +75,12 @@ const handleToggleFavorite = async (contact) => {
       toast.error('Failed to update favorite status');
     }
   };
-  const { filteredContacts, companies, tags } = useMemo(() => {
-let filtered = [...contacts];
+const { filteredContacts, companies, tags } = useMemo(() => {
+    let filtered = [...contacts];
+
+    if (filterView === 'favorites') {
+      filtered = filtered.filter(contact => contact.isFavorite);
+    }
     
     // Search filter
     if (searchTerm) {
