@@ -49,7 +49,7 @@ async update(id, contactData) {
     }
   },
 
-  async toggleFavorite(id) {
+async toggleFavorite(id) {
     await delay(350);
     const index = contacts.findIndex(c => c.Id === parseInt(id));
     if (index === -1) {
@@ -58,7 +58,7 @@ async update(id, contactData) {
     
     const updatedContact = {
       ...contacts[index],
-      ...contactData,
+      isFavorite: !contacts[index].isFavorite,
       Id: parseInt(id),
       updatedAt: new Date().toISOString()
     };
