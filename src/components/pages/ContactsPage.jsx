@@ -10,13 +10,12 @@ import ApperIcon from "@/components/ApperIcon";
 import { contactService } from "@/services/api/contactService";
 
 const ContactsPage = () => {
-const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [contactToEdit, setContactToEdit] = useState(null);
   const [contactToDelete, setContactToDelete] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [filterView, setFilterView] = useState('all');
   const [showMobileDetail, setShowMobileDetail] = useState(false);
 
   const handleSelectContact = (contact) => {
@@ -99,27 +98,13 @@ return (
             </div>
             
             {/* Navigation Menu */}
-<nav className="flex-1 p-4 space-y-2">
+            <nav className="flex-1 p-4 space-y-2">
               <div className="space-y-1">
-                <button 
-                  onClick={() => setFilterView('all')}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium rounded-lg transition-colors duration-200 ${
-                    filterView === 'all'
-                      ? 'text-white bg-gradient-to-r from-primary-500 to-primary-600 shadow-sm'
-                      : 'text-slate-700 hover:bg-green-50'
-                  }`}
-                >
+<button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg shadow-sm">
                   <ApperIcon name="Users" className="w-4 h-4" />
                   All Contacts
                 </button>
-                <button 
-                  onClick={() => setFilterView('favorites')}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium rounded-lg transition-colors duration-200 ${
-                    filterView === 'favorites'
-                      ? 'text-white bg-gradient-to-r from-primary-500 to-primary-600 shadow-sm'
-                      : 'text-slate-700 hover:bg-green-50'
-                  }`}
-                >
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200">
                   <ApperIcon name="Star" className="w-4 h-4" />
                   Favorites
                 </button>
@@ -138,7 +123,6 @@ return (
             onToggleFavorite={handleToggleFavorite}
             onRefresh={() => setRefreshTrigger(prev => prev + 1)}
             refreshTrigger={refreshTrigger}
-            filterView={filterView}
           />
         </div>
       </div>

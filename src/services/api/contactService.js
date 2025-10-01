@@ -8,16 +8,6 @@ export const contactService = {
   async getAll() {
     await delay(300);
     return [...contacts];
-},
-
-  async toggleFavorite(id) {
-    await delay(200);
-    const contact = contacts.find(c => c.Id === parseInt(id));
-    if (!contact) {
-      throw new Error("Contact not found");
-    }
-    contact.isFavorite = !contact.isFavorite;
-    return { ...contact };
   },
 
   async getById(id) {
