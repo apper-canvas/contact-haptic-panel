@@ -114,7 +114,7 @@ export const dealsService = {
     }
   },
 
-  async create(dealData) {
+async create(dealData) {
     try {
       const client = initializeApperClient();
       
@@ -122,7 +122,7 @@ export const dealsService = {
         Name: dealData.Name || '',
         Tags: dealData.Tags || '',
         deal_name_c: dealData.deal_name_c || '',
-        amount_c: dealData.amount_c ? parseInt(dealData.amount_c) : 0,
+        amount_c: dealData.amount_c ? parseInt(dealData.amount_c) : undefined,
         close_date_c: dealData.close_date_c || '',
         stage_c: dealData.stage_c || 'Prospecting'
       };
