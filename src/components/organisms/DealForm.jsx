@@ -5,7 +5,7 @@ import ApperIcon from '@/components/ApperIcon';
 
 function DealForm({ deal, onSave, onCancel }) {
   const [formData, setFormData] = useState({
-    Name: deal?.Name || '',
+Name: (deal?.Name && typeof deal.Name === 'string') ? deal.Name : '',
     deal_name_c: deal?.deal_name_c || '',
     amount_c: deal?.amount_c || '',
     close_date_c: deal?.close_date_c || '',
