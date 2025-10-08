@@ -4,11 +4,11 @@ import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUser, clearUser } from "./store/userSlice";
 import ContactsPage from "@/components/pages/ContactsPage";
+import DealsPage from "@/components/pages/DealsPage";
 import Login from "@/components/pages/Login";
 import Signup from "@/components/pages/Signup";
 import Callback from "@/components/pages/Callback";
 import ErrorPage from "@/components/pages/ErrorPage";
-
 export const AuthContext = createContext(null);
 
 function AppContent() {
@@ -130,8 +130,9 @@ function AppContent() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/callback" element={<Callback />} />
           <Route path="/error" element={<ErrorPage />} />
-          <Route path="/" element={<ContactsPage />} />
+<Route path="/" element={<ContactsPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/deals" element={<DealsPage />} />
         </Routes>
         <ToastContainer
           position="top-right"
