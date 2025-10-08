@@ -22,17 +22,14 @@ export const dealsService = {
       
       const params = {
         fields: [
-          { field: { Name: 'Name' } },
+{ field: { Name: 'Name' } },
           { field: { Name: 'Tags' } },
           { field: { Name: 'deal_name_c' } },
           { field: { Name: 'amount_c' } },
           { field: { Name: 'close_date_c' } },
           { field: { Name: 'stage_c' } },
-          { field: { Name: 'Owner' } },
           { field: { Name: 'CreatedOn' } },
-          { field: { Name: 'CreatedBy' } },
-          { field: { Name: 'ModifiedOn' } },
-          { field: { Name: 'ModifiedBy' } }
+          { field: { Name: 'ModifiedOn' } }
         ],
         where: [],
         orderBy: [{ fieldName: 'CreatedOn', sorttype: 'DESC' }],
@@ -84,17 +81,14 @@ export const dealsService = {
       
       const params = {
         fields: [
-          { field: { Name: 'Name' } },
+{ field: { Name: 'Name' } },
           { field: { Name: 'Tags' } },
           { field: { Name: 'deal_name_c' } },
           { field: { Name: 'amount_c' } },
           { field: { Name: 'close_date_c' } },
           { field: { Name: 'stage_c' } },
-          { field: { Name: 'Owner' } },
           { field: { Name: 'CreatedOn' } },
-          { field: { Name: 'CreatedBy' } },
-          { field: { Name: 'ModifiedOn' } },
-          { field: { Name: 'ModifiedBy' } }
+          { field: { Name: 'ModifiedOn' } }
         ]
       };
 
