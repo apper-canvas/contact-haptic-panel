@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { contactService } from "@/services/api/contactService";
@@ -11,7 +12,8 @@ import ContactDetail from "@/components/organisms/ContactDetail";
 import ContactModal from "@/components/organisms/ContactModal";
 
 const ContactsPage = () => {
-  const { logout } = useContext(AuthContext);
+const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -120,8 +122,8 @@ return (
                   <ApperIcon name="Star" className="w-4 h-4" />
                   Favorites
                 </button>
-                <button 
-                  onClick={() => window.location.href = '/deals'}
+<button 
+                  onClick={() => navigate('/deals')}
                   className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200"
                 >
                   <ApperIcon name="DollarSign" className="w-4 h-4" />

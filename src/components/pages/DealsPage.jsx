@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { dealsService } from '@/services/api/dealsService';
@@ -15,6 +16,7 @@ import SearchBar from '@/components/molecules/SearchBar';
 import FilterDropdown from '@/components/molecules/FilterDropdown';
 
 function DealsPage() {
+  const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
   const { user } = useSelector((state) => state.user);
   
@@ -181,8 +183,8 @@ function DealsPage() {
 
         <nav className="flex-1 p-4 space-y-2">
           <div className="space-y-1">
-            <button 
-              onClick={() => window.location.href = '/contacts'}
+<button 
+              onClick={() => navigate('/contacts')}
               className="w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-slate-700 hover:bg-green-50 rounded-lg transition-colors duration-200"
             >
               <ApperIcon name="Users" className="w-4 h-4" />
